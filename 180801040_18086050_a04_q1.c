@@ -70,8 +70,15 @@ int main(int argc, char *argv[]) {
 		}
 		printf("\n");
 	}
-	int allocated[customer_count][num_resources] = { 0 };
-	int need[customer_count][num_resources] = { 0 };
+	int allocated[customer_count][num_resources];
+	int need[customer_count][num_resources];
+
+	for (int d = 0; d < customer_count; d++) {
+		for (int j = 0; j < num_resources; j++) {
+			allocated[d][j] = 0;
+			need[d][j] = 0;
+		}
+	}
 
 	char command[6];
 	int customer;
@@ -80,13 +87,28 @@ int main(int argc, char *argv[]) {
 	// Wait for user input
 	for (;;) {
 		printf("Enter Command: ");
-		scanf(" %d", &resources[i]);
-	}
-}
-else {
-	printf("Invalid input, use one of RQ, RL, Status, Run, Exit");
-}
 
-}
+		scanf("%s", command);
+		if (strcmp(command, "Exit") == 0) {
+			return 0;
+		} else if (strcmp(command, "Status") == 0) {
+			printf("Available Resources");
+		} else if (strcmp(command, "Run") == 0) {
+
+		} else if (strcmp(command, "RQ") == 0) {
+			scanf(" %d", &customer);
+			for (int i = 0; i < num_resources; i++) {
+				scanf(" %d", &resources[i]);
+			}
+		} else if (strcmp(command, "RL") == 0) {
+			scanf(" %d", &customer);
+			for (int i = 0; i < num_resources; i++) {
+				scanf(" %d", &resources[i]);
+			}
+		} else {
+			printf("Invalid input, use one of RQ, RL, Status, Run, Exit \n");
+		}
+
+	}
 
 }
