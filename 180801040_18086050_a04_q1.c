@@ -3,6 +3,7 @@
 #include<unistd.h>
 #include<pthread.h>
 #include <string.h>
+#include <stdbool.h>
 #define MAX_FILE_NAME 100
 
 int main(int argc, char *argv[]) {
@@ -55,10 +56,12 @@ int main(int argc, char *argv[]) {
 	}
 
 	int maximum[customer_count][num_resources];
+	int need[customer_count][num_resources];
 	int row = 0;
 	while (fgets(line, sizeof(line), input_file)) {
 		for (int i = 0; i < (num_resources * 2) - 1; i += 2) {
 			maximum[row][i / 2] = line[i] - '0';
+			need[row][i / 2] = line[i] - '0';
 		}
 		row++;
 	}
@@ -71,12 +74,10 @@ int main(int argc, char *argv[]) {
 		printf("\n");
 	}
 	int allocated[customer_count][num_resources];
-	int need[customer_count][num_resources];
 
 	for (int d = 0; d < customer_count; d++) {
 		for (int j = 0; j < num_resources; j++) {
 			allocated[d][j] = 0;
-			need[d][j] = 0;
 		}
 	}
 
@@ -92,7 +93,32 @@ int main(int argc, char *argv[]) {
 		if (strcmp(command, "Exit") == 0) {
 			return 0;
 		} else if (strcmp(command, "Status") == 0) {
-			printf("Available Resources");
+			printf("Available Resources: \n");
+			for (int res = 0; res < num_resources; res++) {
+				printf("%d ", available[res]);
+			}
+			printf("\n");
+			printf("Maximum Resources: \n");
+			for (int cust = 0; cust < customer_count; cust++) {
+				for (int res = 0; res < num_resources; res++) {
+					printf("%d ", maximum[cust][res]);
+				}
+				printf("\n");
+			}
+			printf("Allocated Resources: \n");
+			for (int cust = 0; cust < customer_count; cust++) {
+				for (int res = 0; res < num_resources; res++) {
+					printf("%d ", allocated[cust][res]);
+				}
+				printf("\n");
+			}
+			printf("Need Resources: \n");
+			for (int cust = 0; cust < customer_count; cust++) {
+				for (int res = 0; res < num_resources; res++) {
+					printf("%d ", need[cust][res]);
+				}
+				printf("\n");
+			}
 		} else if (strcmp(command, "Run") == 0) {
 
 		} else if (strcmp(command, "RQ") == 0) {
@@ -100,11 +126,48 @@ int main(int argc, char *argv[]) {
 			for (int i = 0; i < num_resources; i++) {
 				scanf(" %d", &resources[i]);
 			}
+			bool safe = true;
+			for (int i = 0; i < num_resources; i++) {
+				if (resources[i] > available[i]) {
+					safe = false;
+				}
+			}
+			if (safe) {
+				// allocate
+				for (int i = 0; i < num_resources; i++) {
+					allocated[customer][i] += resources[i];
+					available[i] -= resources[i];
+					need[customer][i] -= resources[i];
+				}
+				printf("State is safe, and request is satisfied\n");
+			} else {
+				// print error statement
+				printf("State not safe, and request is not satisfied\n");
+			}
 		} else if (strcmp(command, "RL") == 0) {
 			scanf(" %d", &customer);
 			for (int i = 0; i < num_resources; i++) {
 				scanf(" %d", &resources[i]);
 			}
+			bool safe = true;
+			for (int i = 0; i < num_resources; i++) {
+				if (resources[i] > allocated[customer][i]) {
+					safe = false;
+				}
+			}
+			if (safe) {
+				// release
+				for (int i = 0; i < num_resources; i++) {
+					allocated[customer][i] -= resources[i];
+					available[i] += resources[i];
+				}
+				printf("The resources have been released successfully\n");
+			} else {
+				// print error statement
+				printf(
+						"Not enough allocated resources for customer, enter values <= currently allocated resources for the customer\n");
+			}
+
 		} else {
 			printf("Invalid input, use one of RQ, RL, Status, Run, Exit \n");
 		}
