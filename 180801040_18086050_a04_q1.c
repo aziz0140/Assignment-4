@@ -12,7 +12,9 @@
  * Student Name: Raiyan Jugbhery
  * Student ID: 180686050
  * Student Email: jugb6050@mylaurier.ca
- * Student Task Split: Task 1 is done by Raiyan Jugbhery, Task 2 is done by Carson Aziz
+ * github login id: jugb6050
+ * github repo url: https://github.com/aziz0140/Assignment-4
+ * Student Task Split: Question 1 is done by Raiyan Jugbhery, Question 2 is done by Carson Aziz
  */
 
 //mutex init var
