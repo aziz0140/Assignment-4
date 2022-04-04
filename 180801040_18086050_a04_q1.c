@@ -6,6 +6,62 @@
 #include <stdbool.h>
 #define MAX_FILE_NAME 100
 
+/*
+ * CP386 Assignment 4 Submission
+ * Student Name: Raiyan Jugbhery
+ * Student ID: 180686050
+ * Student Email: jugb6050@mylaurier.ca
+ * Student Task Split: Task 1 is done by Raiyan Jugbhery, Task 2 is done by Carson Aziz
+ */
+
+bool SafetyCheck(int num_customers, int num_resources, int available[],
+		int allocation[][], int requested[][]) {
+	bool safe = true;
+	int finish[num_customers];
+	int work[num_resources];
+
+	// Initialize work = available
+	for (int i = 0; i < num_resources; i++) {
+		work[i] = available[i];
+	}
+
+	// for i, if allocation[i] !=0, finish[i] = false. Otherwise finish[i] = true
+	for (int i = 0; i < num_customers; i++) {
+		finish[i] = true;
+		for (int j = 0; j < num_resources; j++) {
+			if (allocation[i][j] != 0) {
+				finish[i] = false;
+			}
+		}
+	}
+
+	for (int i = 0; i < num_customers; i++) {
+		if (!finish[i]) {
+			bool work_avail = true;
+			for (int j = 0; j < num_resources; j++) {
+				if (requested[i][j] > work[j]) {
+					work_avail = false;
+				}
+			}
+			if (work_avail) {
+				for (int j = 0; j < num_resources; j++) {
+					work[j] += allocation[i][j];
+				}
+				finish[i] = true;
+			}
+		}
+		i = -1;
+	}
+
+	// Step 4
+	for (int i = 0; i < num_customers; i++) {
+		if (!finish[i]) {
+			safe = false;
+		}
+	}
+	return safe;
+}
+
 int main(int argc, char *argv[]) {
 	//variable init below -----------------------
 	FILE *input_file;
@@ -122,52 +178,79 @@ int main(int argc, char *argv[]) {
 		} else if (strcmp(command, "Run") == 0) {
 
 		} else if (strcmp(command, "RQ") == 0) {
+			// Read in customer number
 			scanf(" %d", &customer);
-			for (int i = 0; i < num_resources; i++) {
-				scanf(" %d", &resources[i]);
-			}
-			bool safe = true;
-			for (int i = 0; i < num_resources; i++) {
-				if (resources[i] > available[i]) {
-					safe = false;
-				}
-			}
-			if (safe) {
-				// allocate
-				for (int i = 0; i < num_resources; i++) {
-					allocated[customer][i] += resources[i];
-					available[i] -= resources[i];
-					need[customer][i] -= resources[i];
-				}
-				printf("State is safe, and request is satisfied\n");
+			// check if valid customer
+			if (customer < 0 || customer >= customer_count) {
+				print("Please enter a valid customer number");
 			} else {
-				// print error statement
-				printf("State not safe, and request is not satisfied\n");
+				// Read in the number of resources to request
+				for (int i = 0; i < num_resources; i++) {
+					scanf(" %d", &resources[i]);
+				}
+
+				int requested[customer_count][num_resources];
+				for (int i = 0; i < customer_count; i++) {
+					for (int j = 0; j < num_resources; j++) {
+						if (i == customer) {
+							requested[i][j] = resources[i];
+						} else {
+							requested[i][j] = 0;
+						}
+					}
+				}
+				bool safe = SafetyCheck(customer_count, num_resources,
+						available, allocated, requested);
+				for (int i = 0; i < num_resources; i++) {
+					if (resources[i] > available[i]
+							|| resources[i] > maximum[customer][i]) {
+						safe = false;
+					}
+				}
+				if (safe) {
+					// allocate
+					for (int i = 0; i < num_resources; i++) {
+						allocated[customer][i] += resources[i];
+						available[i] -= resources[i];
+						need[customer][i] -= resources[i];
+					}
+					printf("State is safe, and request is satisfied\n");
+				} else {
+					// print error statement
+					printf("State not safe, and request is not satisfied\n");
+				}
 			}
 		} else if (strcmp(command, "RL") == 0) {
+			// Read in customer number
 			scanf(" %d", &customer);
-			for (int i = 0; i < num_resources; i++) {
-				scanf(" %d", &resources[i]);
-			}
-			bool safe = true;
-			for (int i = 0; i < num_resources; i++) {
-				if (resources[i] > allocated[customer][i]) {
-					safe = false;
-				}
-			}
-			if (safe) {
-				// release
-				for (int i = 0; i < num_resources; i++) {
-					allocated[customer][i] -= resources[i];
-					available[i] += resources[i];
-				}
-				printf("The resources have been released successfully\n");
+			// check if valid customer
+			if (customer < 0 || customer >= customer_count) {
+				print("Please enter a valid customer number");
 			} else {
-				// print error statement
-				printf(
-						"Not enough allocated resources for customer, enter values <= currently allocated resources for the customer\n");
+				// Read in the number of resources to release
+				for (int i = 0; i < num_resources; i++) {
+					scanf(" %d", &resources[i]);
+				}
+				// Check to see if the customer has enough resources to release
+				bool safe = true;
+				for (int i = 0; i < num_resources; i++) {
+					if (resources[i] > allocated[customer][i]) {
+						safe = false;
+					}
+				}
+				if (safe) {
+					// release the resources
+					for (int i = 0; i < num_resources; i++) {
+						allocated[customer][i] -= resources[i];
+						available[i] += resources[i];
+					}
+					printf("The resources have been released successfully\n");
+				} else {
+					// print error statement
+					printf(
+							"Not enough allocated resources for customer, enter values <= currently allocated resources for the customer\n");
+				}
 			}
-
 		} else {
 			printf("Invalid input, use one of RQ, RL, Status, Run, Exit \n");
 		}
@@ -175,3 +258,4 @@ int main(int argc, char *argv[]) {
 	}
 
 }
+
