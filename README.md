@@ -20,9 +20,8 @@ Question 2 - Carson Aziz
 **Question 1 Features:** Raiyan Jugbhery
 
 Extra testing added for if incorrect values are requested or released:
-  -Check to see if the customer has enough resources to release
   
-   -Checks to see if user is requesting to release resources that are not allocated
+  -Checks to see if user is requesting to release resources that are not allocated
     
   -Check to see if resources requested is less than available, and also fail safes the user from requesting greater than what their
   maximum needed resource is.
@@ -31,13 +30,25 @@ Extra testing added for if incorrect values are requested or released:
 
 -Error checks if file exists or not
 
+-Checks to see if customer number is valid, this is done by getting number of customers from sample file, then checking to see if user input matches a number that is between 0 and max customer number
+
 -------------------------------------------
 
 Test Cases for Question 1: Raiyan Jugbhery
 
 - Incorrect Input for command
 
-- Correct Input following Assignment Instructions
+- Exit Command works correctly
+
+- Status Command works Correctly
+
+- Run Command works Correctly
+
+- RQ Command works correctly
+
+- RL Command works correctly
+
+- Correct Input/Output following Assignment Instructions
 
 -----------------------------------------------
 
