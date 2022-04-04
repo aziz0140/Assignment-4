@@ -24,7 +24,7 @@ Extra testing added for if incorrect values are requested or released:
   
    -Checks to see if user is requesting to release resources that are not allocated
     
-  -Check to see if resources requested is less than available, and also fail safes the user requestion greater than what their
+  -Check to see if resources requested is less than available, and also fail safes the user from requesting greater than what their
   maximum needed resource is.
   
 -Fail safes any incorrect commands that are not outlined within the assignment
