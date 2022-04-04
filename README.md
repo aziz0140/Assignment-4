@@ -1,4 +1,4 @@
-# CP 386 Assignment-4 - DUE DATE: APR 4TH 11:59 PM
+# CP 386 Assignment 4 - DUE DATE: APR 4TH 11:59 PM
 
 
 **## Contributors**
