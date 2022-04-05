@@ -105,7 +105,7 @@ void* CustomerRun(void *in) {
 
 	//variable casting/getting arguments
 
-	int customer = ((struct args*) in)->cust_num;
+	// int customer = ((struct args*) in)->cust_num;
 	int num_resources = ((struct args*) in)->num_res;
 	int *available = ((struct args*) in)->avail;
 	int *allocated = ((struct args*) in)->allo;
@@ -322,16 +322,16 @@ int main(int argc, char *argv[]) {
 					scanf(" %d", &resources[i]);
 				}
 
-				int requested[customer_count][num_resources];
-				for (int i = 0; i < customer_count; i++) {
-					for (int j = 0; j < num_resources; j++) {
-						if (i == customer) {
-							requested[i][j] = resources[i];
-						} else {
-							requested[i][j] = 0;
-						}
-					}
-				}
+				// int requested[customer_count][num_resources];
+				// for (int i = 0; i < customer_count; i++) {
+				// 	for (int j = 0; j < num_resources; j++) {
+				// 		if (i == customer) {
+				// 			requested[i][j] = resources[i];
+				// 		} else {
+				// 			requested[i][j] = 0;
+				// 		}
+				// 	}
+				// }
 				//bool safe = SafetyCheck(customer_count, num_resources,
 				//available, allocated, requested
 				//);
