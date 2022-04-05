@@ -102,6 +102,8 @@ Test Cases for Question 2: Carson Aziz
 
   _- Testing done using Makefile using given assignment inputs as default:_
 
+![cp386_a4_q2_p1](https://user-images.githubusercontent.com/102558934/161658739-d5d78417-cad9-4c5b-bb76-b1064399ee7f.png)
+![cp386_a4_q2_p2](https://user-images.githubusercontent.com/102558934/161658750-91f5f31d-e251-40bc-8d8c-d045facee1fa.png)
 
 -----------------------------------------------
 
