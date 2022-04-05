@@ -5,6 +5,7 @@
 - Carson Aziz - 180801040 - aziz0140 - aziz0140@mylaurier.ca
   - github account that made commits is "carsonaziz" and "aziz0140"
 - Raiyan Jugbhery - 180686050 - jugb6050 - jugb6050@mylaurier.ca
+  - github account that made commits is "jugb6050"
 
 -----------------------------------------
 
