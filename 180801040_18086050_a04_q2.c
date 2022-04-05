@@ -3,7 +3,7 @@
  * Student Name: Carson Aziz
  * Student ID: 180800140
  * Student Email: aziz0140@mylaurier.ca
- * github login id: aziz0140
+ * github login id: aziz0140, carsonaziz
  * github repo url: https://github.com/aziz0140/Assignment-4
  * Student Task Split: Question 1 is done by Raiyan Jugbhery, Question 2 is done by Carson Aziz
  */
